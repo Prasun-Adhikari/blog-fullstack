@@ -54,7 +54,7 @@ Selected Post:
 <br><br>
 <br><br>
 Raw data (for debugging):
-<pre>{{ JSON.stringify(posts, null, 2) }}</pre>
+<pre class="container max-w-200 overflow-clip">{{ JSON.stringify(posts, null, 2) }}</pre>
 
 </template>
 
