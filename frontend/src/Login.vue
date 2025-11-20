@@ -15,9 +15,9 @@ async function submitForm() {
 
 <template>
     <form method="POST" v-on:submit.prevent="submitForm">
-        Email:<input name="email" v-model="formData.email"><br>
-        Password:<input name="password" v-model="formData.password"><br>
-        <button type="submit">Submit</button>
+        Email:<input name="email" v-model="formData.email" class="txtin"><br>
+        Password:<input name="password" v-model="formData.password" class="txtin"><br>
+        <button type="submit" class="btn1">Submit</button>
     </form>
     {{ response }}
 </template>

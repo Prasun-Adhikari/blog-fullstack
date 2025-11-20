@@ -4,3 +4,11 @@
 @plugin '@tailwindcss/typography';
 
 @custom-variant dark (&:where(.dark, .dark *));
+
+.btn1 {
+    @apply bg-gray-500 text-white px-1 m-1 rounded hover:bg-gray-700
+}
+
+.txtin {
+    @apply h-8 m-1.5
+}

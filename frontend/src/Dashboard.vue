@@ -48,7 +48,7 @@ Posts:
   <li v-for="post in posts">
     <strong>{{ post.title }}</strong>
     - by <em>{{ post.user.name }} </em>
-    <button @click="getOnePost(post.id); mode='view'" class="bg-gray-500 text-white px-1 m-1 rounded">View post</button>
+    <button @click="getOnePost(post.id); mode='view'" class="btn1">View post</button>
   </li>
 </ul>
 
@@ -56,8 +56,8 @@ Posts:
 
 <div v-if="mode=='view'">
   Selected Post:
-  <button @click="mode='edit'">Edit Post</button>
-  <button @click="deletepost()">Delete Post</button>
+  <button @click="mode='edit'" class="btn1">Edit Post</button>
+  <button @click="deletepost()" class="btn1">Delete Post</button>
   <div class="border border-gray-400 p-4 m-2">
     <post :post="onepost"></post>
   </div>

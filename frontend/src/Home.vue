@@ -29,9 +29,9 @@ onMounted(getPosts)
 
 <template>
 
-<input v-model="pattern"></input>
-<button @click="search('like')" class="bg-gray-500 text-white p-1 m-1 rounded">Search</button>
-<button @click="search('regex')" class="bg-gray-500 text-white p-1 m-1 rounded">Search Regex</button>
+<input v-model="pattern" class="txtin"></input>
+<button @click="search('like')" class="btn1">Search</button>
+<button @click="search('regex')" class="btn1">Search Regex</button>
 
 <br><br>
 
@@ -40,7 +40,7 @@ All Posts:
   <li v-for="post in posts">
     <strong>{{ post.title }}</strong>
     - by <em>{{ post.user.name }} </em>
-    <button @click="getOnePost(post.id)" class="bg-gray-500 text-white px-1 m-1 rounded">View post</button>
+    <button @click="getOnePost(post.id)" class="btn1">View post</button>
 
   </li>
 </ul>
