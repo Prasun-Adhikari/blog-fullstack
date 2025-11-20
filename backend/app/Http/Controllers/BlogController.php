@@ -11,7 +11,7 @@ class BlogController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:sanctum')->only(['store', 'userblog']);
+        $this->middleware('auth:sanctum')->only(['store', 'userblog', 'update', 'destroy']);
     }
     /**
      * Display a listing of the resource.
@@ -82,7 +82,10 @@ class BlogController extends Controller
      */
     public function update(Request $request, Blog $blog)
     {
-        //
+        $fullreq = ['text' => $request->text, 'title' => $request->title, 'date' => date('Y-m-d')];
+        $blog->update($fullreq);
+        // Blog::create($fullreq);
+        // return $request;   
     }
 
     /**
@@ -90,6 +93,6 @@ class BlogController extends Controller
      */
     public function destroy(Blog $blog)
     {
-        //
+        $blog->delete();
     }
 }

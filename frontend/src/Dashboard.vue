@@ -3,8 +3,10 @@ import { onMounted, ref } from 'vue';
 
 import api from './utils/axios.js'
 import post from './Post.vue';
+import edit from './Edit.vue'
 
 const user = ref({});
+const mode = ref('');
 
 async function getUser() {
     const res = await api.get('api/user');
@@ -24,6 +26,14 @@ async function getOnePost(id) {
     onepost.value = post.data;
 }
 
+async function deletepost() {
+  if (confirm('Are you sure?')) {
+    console.log('deleted');
+    await api.delete(`api/blog/${onepost.value.id}`);
+    mode.value='';
+  }
+}
+
 onMounted(getUser)
 onMounted(getPosts)
 
@@ -38,15 +48,28 @@ Posts:
   <li v-for="post in posts">
     <strong>{{ post.title }}</strong>
     - by <em>{{ post.user.name }} </em>
-    <button @click="getOnePost(post.id)" class="bg-gray-500 text-white px-1 m-1 rounded">View post</button>
+    <button @click="getOnePost(post.id); mode='view'" class="bg-gray-500 text-white px-1 m-1 rounded">View post</button>
   </li>
 </ul>
 
 <br>
-Selected Post:
- <div  class="border border-gray-400 p-4 m-2">
-   <post :post="onepost"></post>
- </div>
+
+<div v-if="mode=='view'">
+  Selected Post:
+  <button @click="mode='edit'">Edit Post</button>
+  <button @click="deletepost()">Delete Post</button>
+  <div class="border border-gray-400 p-4 m-2">
+    <post :post="onepost"></post>
+  </div>
+</div>
+
+<div v-if="mode=='edit'">
+  Edit Post:
+  <div class="border border-gray-400 p-4 m-2">
+    <edit :post="onepost"></edit>
+  </div>
+</div>
+
 </template>
 
 <style scoped>
