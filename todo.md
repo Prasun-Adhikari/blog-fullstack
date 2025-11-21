@@ -1,7 +1,7 @@
 # ToDo
 
 ### Login/Signup
-- [ ] Show/Hide password
+- [x] ~~Show/Hide password~~
 - [ ] Frontend validation
 - [ ] Error messages
 - [ ] Password validation (both)
@@ -22,3 +22,6 @@
 - [ ] Blog List
 - [ ] Post
 - [ ] Preview
+
+### Others
+- [ ] Setup pinia
