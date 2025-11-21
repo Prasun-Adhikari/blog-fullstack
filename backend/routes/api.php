@@ -14,7 +14,8 @@ Route::get('/hello', function () {
 });
 
 Route::apiResource('blog', BlogController::class);
-Route::get('/userblog', [BlogController::class, 'userblog']);
+Route::get('/userblog/{id}', [BlogController::class, 'userblog']);
+Route::get('/userblog', [BlogController::class, 'currentuserblog']);
 Route::get('/searchblog', [BlogController::class, 'search']);
 
 Route::post('/signup', [LoginController::class, 'signup']);

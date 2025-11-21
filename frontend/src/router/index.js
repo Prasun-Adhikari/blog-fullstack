@@ -5,6 +5,7 @@ import Create from '@/Create.vue'
 import Signup from '@/Signup.vue'
 import Dashboard from '@/Dashboard.vue'
 import Login from '@/Login.vue'
+import ViewUser from '@/ViewUser.vue'
 
 const routes = [
   {'path': '/', component: Home},
@@ -12,6 +13,7 @@ const routes = [
   {'path': '/signup', component: Signup},
   {'path': '/dash', component: Dashboard},
   {'path': '/login', component: Login},
+  {'path': '/user/:id', component: ViewUser}
 ]
 
 const router = createRouter({

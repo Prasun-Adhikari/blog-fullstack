@@ -1,20 +1,19 @@
 <script setup>
 import { onMounted, ref } from 'vue';
+import { useRoute } from 'vue-router';
 
 import api from './utils/axios.js'
 import post from './Post.vue';
 
+const route = useRoute()
+
 const pattern = ref('')
 const posts = ref()
 const onepost = ref({title: '[Title]', text: '[Body]', user: {name: '[Author]'}})
+const user = ref({name: ''})
 
 async function search(type) {
   const allposts = await api.get(`api/searchblog?pattern=${pattern.value}&type=${type}`);
-  posts.value = allposts.data;
-}
-
-async function getPosts() {
-  const allposts = await api.get('api/blog');
   posts.value = allposts.data;
 }
 
@@ -26,9 +25,11 @@ async function getOnePost(id) {
 async function getUserPosts(id) {
   const allposts = await api.get(`api/userblog/${id}`);
   posts.value = allposts.data;
+  user.value = posts.value[0].user;
+  console.log(posts.value, user.value)
 }
 
-onMounted(getPosts)
+onMounted(() => getUserPosts(route.params.id))
 
 </script>
 
@@ -40,6 +41,9 @@ onMounted(getPosts)
 
 <br><br>
 
+User <strong>{{ user.name }}</strong>
+
+<br><br>
 All Posts:
 <ul>
   <li v-for="post in posts">
@@ -55,11 +59,6 @@ Selected Post:
  <div  class="border border-gray-400 p-4 m-2">
    <post :post="onepost" @search="getUserPosts"></post>
  </div>
-
-<br><br>
-<br><br>
-Raw data (for debugging):
-<pre class="container max-w-200 overflow-clip">{{ JSON.stringify(posts, null, 2) }}</pre>
 
 </template>
 

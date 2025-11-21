@@ -11,7 +11,7 @@ class BlogController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:sanctum')->only(['store', 'userblog', 'update', 'destroy']);
+        $this->middleware('auth:sanctum')->only(['store', 'update', 'currentuserblog', 'destroy']);
     }
     /**
      * Display a listing of the resource.
@@ -22,7 +22,13 @@ class BlogController extends Controller
         return $blogs;
     }
 
-    public function userblog(Request $request)
+    public function userblog(Request $request, int $userid)
+    {
+        $blogs = Blog::where('user_id', $userid)->with('user')->get();
+        return $blogs;
+    }
+
+    public function currentuserblog(Request $request)
     {
         $blogs = Blog::where('user_id', $request->user()->id)->with('user')->get();
         return $blogs;
