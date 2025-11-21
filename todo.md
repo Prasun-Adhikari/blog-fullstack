@@ -24,4 +24,5 @@
 - [ ] Preview
 
 ### Others
-- [ ] Setup pinia
+- [x] ~~Setup pinia~~
+    - [ ] Use store everywhere
