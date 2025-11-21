@@ -1,16 +1,12 @@
 <script setup>
 import { onMounted, ref } from 'vue';
-import { useRoute } from 'vue-router';
 
 import api from './utils/axios.js'
 import post from './Post.vue';
 
-const route = useRoute()
-
 const pattern = ref('')
 const posts = ref()
 const onepost = ref({title: '[Title]', text: '[Body]', user: {name: '[Author]'}})
-const user = ref({name: ''})
 
 async function search(type) {
   const allposts = await api.get(`api/searchblog?pattern=${pattern.value}&type=${type}`);
@@ -18,18 +14,16 @@ async function search(type) {
 }
 
 async function getOnePost(id) {
-    const post = await api.get(`api/blog/${id}`);
-    onepost.value = post.data;
+  const post = await api.get(`api/blog/${id}`);
+  onepost.value = post.data;
 }
 
 async function getUserPosts(id) {
-  const allposts = await api.get(`api/userblog/${id}`);
+  const allposts = await api.get(`api/followedblogs`);
   posts.value = allposts.data;
-  user.value = posts.value[0].user;
-  console.log(posts.value, user.value)
 }
 
-onMounted(() => getUserPosts(route.params.id))
+onMounted(getUserPosts)
 
 </script>
 
@@ -40,12 +34,7 @@ onMounted(() => getUserPosts(route.params.id))
 <button @click="search('regex')" class="btn1">Search Regex</button>
 
 <br><br>
-
-User <strong>{{ user.name }}</strong>
-<button @click="api.post(`api/follow/${user.id}`)" class="btn1">Follow</button>
-
-<br><br>
-All Posts:
+Followed:
 <ul>
   <li v-for="post in posts">
     <strong>{{ post.title }}</strong>

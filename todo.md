@@ -8,7 +8,8 @@
 
 ### Blogs
 - [x] ~~Search blog by user~~ User Profile
-- [ ] Follow user
+- [x] ~~Follow user~~
+    - [ ] Unfollow
 - [ ] Sort blogs
 - [ ] Better search interface
 

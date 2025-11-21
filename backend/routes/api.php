@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\FollowController;
 use App\Http\Controllers\LoginController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -16,6 +17,7 @@ Route::get('/hello', function () {
 Route::apiResource('blog', BlogController::class);
 Route::get('/userblog/{id}', [BlogController::class, 'userblog']);
 Route::get('/userblog', [BlogController::class, 'currentuserblog']);
+Route::get('/followedblogs', [BlogController::class, 'followedblogs']);
 Route::get('/searchblog', [BlogController::class, 'search']);
 
 Route::post('/signup', [LoginController::class, 'signup']);
@@ -23,6 +25,7 @@ Route::post('/signup', [LoginController::class, 'signup']);
 Route::post('/login', [LoginController::class, 'login']);
 Route::get('/nologin', [LoginController::class, 'nologin'])->name('login');
 
+Route::post('/follow/{id}', [FollowController::class, 'follow']);
 
 // Route::post('/todos/store', [TodoController::class, 'store'])->name('todos.store');
 // Route::apiResource('user', UserController::class);

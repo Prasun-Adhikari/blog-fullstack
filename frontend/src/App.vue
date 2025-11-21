@@ -19,6 +19,7 @@ watch(curPath, newPath => {
 
 const links = ref({
   '/': 'Home',
+  '/follows': 'Followed',
   '/create': 'Create',
   '/signup': 'Signup',
   '/login': 'Login',
