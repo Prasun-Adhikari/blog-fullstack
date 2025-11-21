@@ -1,16 +1,11 @@
 <script setup>
-import { onMounted } from 'vue';
+import { onMounted, ref } from 'vue';
 
 import post from './Post.vue';
 import { useBlogStore } from './stores/blog.js';
 
 const blogStore = useBlogStore();
-
-async function search(type) {
-  blogStore.query.type = type
-  blogStore.query.column = 'default'
-  blogStore.searchPosts();
-}
+const showadvanced = ref(false)
 
 onMounted(blogStore.fetchAllPosts)
 
@@ -18,9 +13,18 @@ onMounted(blogStore.fetchAllPosts)
 
 <template>
 
-<input v-model="blogStore.query.string" class="txtin"></input>
-<button @click="search('like')" class="btn1">Search</button>
-<button @click="search('regex')" class="btn1">Search Regex</button>
+<input v-model="blogStore.query.string" class="txtin">
+<button @click="blogStore.searchPosts" class="btn1">Search</button> <br>
+Show advanced settings: <input type="checkbox" v-model="showadvanced">
+<div v-if="showadvanced" class="border px-2 w-max">
+  Regex: <input type="checkbox" v-model=blogStore.query.regex><br>
+  Column: <select v-model="blogStore.query.column" class="h-8 m-1.5 py-0.5 pr-10">
+    <option value="default" selected>Title/Body</option>
+    <option value="title">Title</option>
+    <option value="text">Body</option>
+    <option value="user">User</option>
+  </select>
+</div>
 
 <br><br>
 

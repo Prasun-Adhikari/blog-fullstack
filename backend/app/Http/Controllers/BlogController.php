@@ -48,11 +48,26 @@ class BlogController extends Controller
     public function search(Request $request)
     {
         $pattern = $request->pattern;
-        $type = $request->type;
-        if ($type == 'regex') {
-            $blogs = Blog::whereRaw('title REGEXP ? OR text REGEXP ?', [$pattern, $pattern])->with('user')->get();
+        $regex = $request->regex;
+        $column = $request->column;
+
+        if ($regex == true) {
+            $augpattern = $pattern;
+            $type = "REGEXP";
         } else {
-            $blogs = Blog::whereRaw('title LIKE ? OR text LIKE ?', ["%$pattern%", "%$pattern%"])->with('user')->get();
+            $augpattern = "%$pattern%";
+            $type = "LIKE";
+        }
+
+        if ($column == 'text' || $column == 'title') {
+            error_log($column);
+            $blogs = Blog::whereRaw("$column $type ?", [$augpattern])->with('user')->get();
+        } elseif ($column == 'default') {
+            $blogs = Blog::whereRaw("title $type ? OR text $type ?", [$augpattern, $augpattern])->with('user')->get();
+        } elseif ($column == 'user') {
+            $blogs = Blog::whereHas('user', function ($query) use ($pattern) {
+                $query->where('name', 'LIKE', "%$pattern%");
+                })->with('user')->get();
         }
         return $blogs;
     }

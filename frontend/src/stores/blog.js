@@ -5,7 +5,7 @@ export const useBlogStore = defineStore("blog", {
   state: () => ({
     posts: [],
     selectedPost: {title: '[Title]', text: '[Body]', user: {name: '[Author]'}},
-    query: {string: '', type: ''}
+    query: {string: '', regex: false, column: 'default'}
   }),
 
   getters: {},
@@ -19,7 +19,9 @@ export const useBlogStore = defineStore("blog", {
       this.selectedPost = this.posts.filter((post) => post.id == id)[0];
     },
     async searchPosts() {
-        const posts = await api.get(`api/searchblog?pattern=${this.query.string}&type=${this.query.type}`);
+        console.log(this.query.column)
+        const posts = await api.get(
+            `api/searchblog?pattern=${this.query.string}&regex=${this.query.regex}&column=${this.query.column}`);
         this.posts = posts.data; 
     },
     async getUserPosts(id) {

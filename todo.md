@@ -11,7 +11,7 @@
 - [x] ~~Follow user~~
     - [ ] Unfollow
 - [ ] Sort blogs
-- [ ] Better search interface
+- [x] Better search interface
 
 ### Design
 - [ ] Form alignment
