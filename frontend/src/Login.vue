@@ -2,6 +2,11 @@
 import { ref } from 'vue';
 
 import api from './utils/axios.js'
+import { useRouter } from 'vue-router';
+import { useAuthStore } from './stores/auth.js';
+
+const router = useRouter();
+const authStore = useAuthStore();
 
 const formData = ref({})
 const response = ref('')
@@ -10,8 +15,10 @@ const showPassword = ref(false);
 
 async function submitForm() {
   response.value = await api.post('api/login', formData.value);
-  $cookies.set('access_token', response.value.data.access_token);
-  localStorage.setItem('access_token', response.value.data.access_token);
+  authStore.login(response.value.data.access_token);
+  router.push({ path: '/dash' })
+//   $cookies.set('access_token', response.value.data.access_token);
+//   localStorage.setItem('access_token', response.value.data.access_token);
 }
 </script>
 

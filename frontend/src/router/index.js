@@ -7,6 +7,7 @@ import Dashboard from '@/Dashboard.vue'
 import Login from '@/Login.vue'
 import ViewUser from '@/ViewUser.vue'
 import Follows from '@/Follows.vue'
+import Logout from '@/Logout.vue'
 
 const routes = [
   {'path': '/', component: Home},
@@ -14,6 +15,7 @@ const routes = [
   {'path': '/signup', component: Signup},
   {'path': '/dash', component: Dashboard},
   {'path': '/login', component: Login},
+  {'path': '/logout', component: Logout},
   {'path': '/user/:id', component: ViewUser},
   {'path': '/follows', component: Follows},
 ]
