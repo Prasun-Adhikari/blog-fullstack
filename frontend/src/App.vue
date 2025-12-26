@@ -22,11 +22,20 @@ watch(curPath, newPath => {
   localStorage.setItem('curPath', newPath)
 })
 
-const links = ref({
-  '/': 'Home',
-  '/follows': 'Followed',
-  '/create': 'Create',
-})
+
+const links = computed(() =>
+  !authStore.isAuthenticated
+    ? {
+      '/': 'Home',
+      '/create': 'Create',
+    }
+    : {
+      '/': 'Home',
+      '/follows': 'Followed',
+      '/create': 'Create',
+    }
+)
+
 
 const icons = {
   'Home': HomeIcon,

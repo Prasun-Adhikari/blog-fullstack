@@ -1,14 +1,17 @@
 <script setup>
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 
 import api from './utils/axios.js'
 import Preview from './Preview.vue';
+import ensureLogin from './utils/auth.js';
 
 const formData = ref({title: null, text: ''})
 
 function submitForm() {
   api.post('api/blog', formData.value);
 }
+
+onMounted(ensureLogin)
 </script>
 
 <template>
