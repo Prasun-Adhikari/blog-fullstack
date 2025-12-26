@@ -7,6 +7,7 @@ import edit from './Edit.vue'
 
 const user = ref({});
 const mode = ref('');
+const followers = ref({});
 
 async function getUser() {
     const res = await api.get('api/user');
@@ -34,16 +35,37 @@ async function deletepost() {
   }
 }
 
-onMounted(getUser)
-onMounted(getPosts)
+async function getFollowers() {
+  const users = await api.get('/api/followers');
+  followers.value = users.data;
+}
+
+onMounted(() => {
+  getUser();
+  getPosts();
+  getFollowers();
+})
+// onMounted(getUser)
+// onMounted(getPosts)
+// onMounted(getFollowers)
 
 </script>
 
 <template>
+<h2 class="text-xl font-bold">Your Profile</h2>
 Username: {{ user.name }} <br>
 Email: {{ user.email }} <br>
 
-Posts:
+<h2 class="text-xl font-bold mt-5">Followers:</h2>
+<ul>
+  <li v-for="userf in followers">
+    <RouterLink :to="`/user/${userf.id}`" class="underline">
+      {{ userf.name }}
+    </RouterLink>
+  </li>
+</ul>
+
+<h2 class="text-xl font-bold mt-5">Your Posts:</h2>
 <ul>
   <li v-for="post in posts">
     <strong>{{ post.title }}</strong>
@@ -52,10 +74,9 @@ Posts:
   </li>
 </ul>
 
-<br>
 
 <div v-if="mode=='view'">
-  Selected Post:
+  <h2 class="text-xl font-bold mt-10">Selected Post:</h2>
   <button @click="mode='edit'" class="btn1">Edit Post</button>
   <button @click="deletepost()" class="btn1">Delete Post</button>
   <div class="border border-gray-400 p-4 m-2">

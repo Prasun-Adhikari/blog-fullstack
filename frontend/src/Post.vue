@@ -1,6 +1,4 @@
 <script setup>
-import {ref} from 'vue'
-import { marked } from 'marked';
 import Preview from './Preview.vue';
 
 const props = defineProps({
@@ -13,27 +11,15 @@ const emit = defineEmits(['search'])
 
 <template>
     <div class="prose">
-        <h1>{{ post.title }}</h1>
-        by
+        <h1 class="mb-2">{{ post.title }}</h1>
+        &emsp; by
         <RouterLink :to="`/user/${post.user.id}`">
           {{ post.user.name }}
         </RouterLink>
     </div>
     <br>
     <Preview :postText="post.text"></Preview>
-    <!-- <div v-html="marked.parse(post.text)" class="prose"></div> -->
 </template>
 
 <style scoped>
-/* span {
-  font-size: 1.2em;
-}
-.done1 {
-  text-decoration: line-through;
-}
-button, input {
-  border: revert;
-  padding: 0px 5px;  
-  margin: 5px;
-} */
 </style>

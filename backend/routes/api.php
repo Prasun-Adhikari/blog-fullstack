@@ -26,6 +26,7 @@ Route::post('/login', [LoginController::class, 'login']);
 Route::get('/nologin', [LoginController::class, 'nologin'])->name('login');
 
 Route::post('/follow/{id}', [FollowController::class, 'follow']);
+Route::get('/followers', [FollowController::class, 'getFollowers']);
 
 // Route::post('/todos/store', [TodoController::class, 'store'])->name('todos.store');
 // Route::apiResource('user', UserController::class);
