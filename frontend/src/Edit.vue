@@ -1,6 +1,5 @@
 <script setup>
-import { ref } from 'vue';
-import { marked } from 'marked';
+import Preview from './Preview.vue';
 
 import api from './utils/axios.js'
 
@@ -18,9 +17,7 @@ function submitForm() {
   Title: <input name="title" v-model="post.title" class="txtin"> <br>
   Body: <br>
   <textarea name="text" v-model="post.text" cols="30" rows="15" class="float-left"> </textarea>
-  <div class="prose border p-5 ml-5 float-left min-w-100 min-h-100">
-      <div v-html="marked.parse(post.text)"></div>
-  </div>
+  <Preview class="border p-5 ml-5 float-left min-w-100 min-h-100" :postText="post.text"></Preview>
 
   <br style="clear:both">
   <button type="submit" class="btn1">Submit</button>

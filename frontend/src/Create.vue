@@ -1,8 +1,8 @@
 <script setup>
 import { ref } from 'vue';
-import { marked } from 'marked';
 
 import api from './utils/axios.js'
+import Preview from './Preview.vue';
 
 const formData = ref({title: null, text: ''})
 
@@ -17,9 +17,7 @@ Create New Post:
   Title: <input name="title" v-model="formData.title" class="txtin"> <br>
   Body: <br>
   <textarea name="text" v-model="formData.text" cols="30" rows="15" class="float-left"> </textarea>
-  <div class="prose border p-5 ml-5 float-left min-w-100 min-h-100">
-      <div v-html="marked.parse(formData.text)"></div>
-  </div>
+  <Preview class="border p-5 ml-5 float-left min-w-100 min-h-100" :postText="formData.text"></Preview>
 
   <br style="clear:both">
   <button type="submit" class="btn1">Submit</button>
