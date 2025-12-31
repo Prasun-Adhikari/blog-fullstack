@@ -8,6 +8,7 @@ import edit from './Edit.vue'
 const user = ref({});
 const mode = ref('');
 const followers = ref({});
+const following = ref({});
 
 async function getUser() {
     const res = await api.get('api/user');
@@ -36,8 +37,10 @@ async function deletepost() {
 }
 
 async function getFollowers() {
-  const users = await api.get('/api/followers');
+  let users = await api.get('/api/followers');
   followers.value = users.data;
+  users = await api.get('/api/following');
+  following.value = users.data;
 }
 
 onMounted(() => {
@@ -56,14 +59,31 @@ onMounted(() => {
 Username: {{ user.name }} <br>
 Email: {{ user.email }} <br>
 
-<h2 class="text-xl font-bold mt-5">Followers:</h2>
-<ul>
-  <li v-for="userf in followers">
-    <RouterLink :to="`/user/${userf.id}`" class="underline">
-      {{ userf.name }}
-    </RouterLink>
-  </li>
-</ul>
+<details>
+  <summary class="text-xl font-bold mt-5">
+    Followers: {{ followers.length }}
+  </summary>
+  <ul>
+    <li v-for="userf in followers">
+      <RouterLink :to="`/user/${userf.id}`" class="underline">
+        {{ userf.name }}
+      </RouterLink>
+    </li>
+  </ul>
+</details>
+
+<details>
+  <summary class="text-xl font-bold mt-5">
+    Following: {{ following.length }}
+  </summary>
+  <ul>
+    <li v-for="userf in following">
+      <RouterLink :to="`/user/${userf.id}`" class="underline">
+        {{ userf.name }}
+      </RouterLink>
+    </li>
+  </ul>
+</details>
 
 <h2 class="text-xl font-bold mt-5">Your Posts:</h2>
 <ul>

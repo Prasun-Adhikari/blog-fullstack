@@ -1,14 +1,14 @@
 <script setup>
-import { onMounted, ref } from 'vue';
+import { onMounted, onUnmounted, ref } from 'vue';
 
-import post from './Post.vue';
 import { useBlogStore } from './stores/blog.js';
+import PostList from './PostList.vue';
 
 const blogStore = useBlogStore();
 const showadvanced = ref(false)
 
 onMounted(blogStore.fetchAllPosts)
-
+onUnmounted(() => blogStore.posts = [])
 </script>
 
 <template>
@@ -29,22 +29,8 @@ Show advanced settings: <input type="checkbox" v-model="showadvanced">
 <br><br>
 
 All Posts:
-<ul>
-  <li v-for="post in blogStore.posts">
-    <strong>{{ post.title }}</strong>
-    - by <em>{{ post.user.name }} </em>
-    <button @click="() => blogStore.selectPost(post.id)" class="btn1">View post</button>
+<PostList></PostList>
 
-  </li>
-</ul>
-
-<br>
-Selected Post:
- <div  class="border border-gray-400 p-4 m-2">
-   <post :post="blogStore.selectedPost" @search="blogStore.getUserPosts"></post>
- </div>
-
-<br><br>
 <br><br>
 Raw data (for debugging):
 <pre class="container max-w-200 overflow-clip">{{ JSON.stringify(blogStore.posts, null, 2) }}</pre>

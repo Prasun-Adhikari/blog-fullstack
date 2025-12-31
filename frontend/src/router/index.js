@@ -8,6 +8,7 @@ import Login from '@/Login.vue'
 import ViewUser from '@/ViewUser.vue'
 import Follows from '@/Follows.vue'
 import Logout from '@/Logout.vue'
+import Post from '@/Post_s.vue'
 
 const routes = [
   {'path': '/', component: Home},
@@ -18,6 +19,7 @@ const routes = [
   {'path': '/logout', component: Logout},
   {'path': '/user/:id', component: ViewUser},
   {'path': '/follows', component: Follows},
+  {'path': '/post', component: Post},
 ]
 
 const router = createRouter({
