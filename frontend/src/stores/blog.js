@@ -26,7 +26,12 @@ export const useBlogStore = defineStore("blog", {
     },
     async getUserPosts(id) {
         const posts = await api.get(`api/userblog/${id}`);
-        this.posts = posts.data; 
+        this.posts = posts.data;
+        return posts.data[0].user;
     },
+    async getFollowedPosts() {
+      const posts = await api.get(`api/followedblogs`);
+      this.posts = posts.data; 
+    }
   },
 });
