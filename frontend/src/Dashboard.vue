@@ -48,9 +48,6 @@ onMounted(() => {
   getPosts();
   getFollowers();
 })
-// onMounted(getUser)
-// onMounted(getPosts)
-// onMounted(getFollowers)
 
 </script>
 
@@ -59,6 +56,7 @@ onMounted(() => {
 Username: {{ user.name }} <br>
 Email: {{ user.email }} <br>
 
+<br>
 <details>
   <summary class="text-xl font-bold mt-5">
     Followers: {{ followers.length }}
@@ -84,6 +82,7 @@ Email: {{ user.email }} <br>
     </li>
   </ul>
 </details>
+<br>
 
 <h2 class="text-xl font-bold mt-5">Your Posts:</h2>
 <ul>

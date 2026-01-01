@@ -16,7 +16,7 @@ onUnmounted(() => blogStore.posts = [])
 <input v-model="blogStore.query.string" class="txtin">
 <button @click="blogStore.searchPosts" class="btn1">Search</button> <br>
 Show advanced settings: <input type="checkbox" v-model="showadvanced">
-<div v-if="showadvanced" class="border px-2 w-max">
+<div v-if="showadvanced" class="p-4 border border-gray-500 rounded-lg w-max">
   Regex: <input type="checkbox" v-model=blogStore.query.regex><br>
   Column: <select v-model="blogStore.query.column" class="h-8 m-1.5 py-0.5 pr-10">
     <option value="default" selected>Title/Body</option>
@@ -30,10 +30,6 @@ Show advanced settings: <input type="checkbox" v-model="showadvanced">
 
 All Posts:
 <PostList></PostList>
-
-<br><br>
-Raw data (for debugging):
-<pre class="container max-w-200 overflow-clip">{{ JSON.stringify(blogStore.posts, null, 2) }}</pre>
 
 </template>
 

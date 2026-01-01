@@ -82,7 +82,7 @@ onMounted(
     </header>
 
   <div class="flex">
-    <nav class="nav1 min-h-screen flex flex-col sticky top-15 h-screen" :class="sidebar ? 'w-50': 'w-10'">
+    <nav class="nav1 min-h-screen flex flex-col fixed top-15" :class="sidebar ? 'w-50': 'w-10'">
       <div class="nav-link mb-5" @click="sidebar = !sidebar">
         <component :is="icons['Expand']" class="h-6 float-left mr-2" :title="displayName"></component>
         <span v-if="sidebar">Collapse</span>
@@ -95,7 +95,7 @@ onMounted(
       </RouterLink>
 
     </nav>
-    <main class="flex-1 p-8 bg-gray-100">
+    <main class="flex-1 p-8 bg-gray-100 min-h-screen" :class="sidebar ? 'pl-60': 'pl-20'">
       <RouterView></RouterView>
     </main>
   </div>
