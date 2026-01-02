@@ -14,6 +14,7 @@ const post = blogStore.selectedPost;
         </RouterLink>
         <span class="mx-4">{{ post.date }}</span>
     </div>
+    <img v-if="post.imgUrl" :src="post.imgUrl" class="my-10">
     <br>
     <Preview :postText="post.text"></Preview>
 </template>

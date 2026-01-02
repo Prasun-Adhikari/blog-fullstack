@@ -87,10 +87,16 @@ class BlogController extends Controller
      */
     public function store(Request $request)
     {
-        $fullreq = ['text' => $request->text, 'title' => $request->title, 'user_id' => $request->user()->id, 'date' => date('Y-m-d')];
-        // $fullreq = ['text' => $request->text, 'title' => $request->title, 'user_id' => '1', 'date' => date('Y-m-d')];
-        Blog::create($fullreq);
-        return $request;   
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'text' => 'required|string',
+            'imgUrl' => 'nullable|string',
+        ]);
+        error_log($validated["imgUrl"]);
+        Blog::create(array_merge($validated, [
+            'user_id' => $request->user()->id,
+            'date' => date('Y-m-d'),
+        ]));
     }
 
     /**
