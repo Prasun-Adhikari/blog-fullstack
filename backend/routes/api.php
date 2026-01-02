@@ -3,6 +3,7 @@
 use App\Http\Controllers\FollowController;
 use App\Http\Controllers\LoginController;
 use Illuminate\Http\Request;
+use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\FileController;
@@ -24,6 +25,10 @@ Route::get('/searchblog', [BlogController::class, 'search']);
 Route::post('/signup', [LoginController::class, 'signup']);
 
 Route::post('/login', [LoginController::class, 'login']);
+Route::middleware([StartSession::class])->group(function () {
+    Route::post('/login/forgot', [LoginController::class, 'forgot_password']);
+    Route::post('/login/reset', [LoginController::class, 'reset_password']);
+});
 Route::get('/nologin', [LoginController::class, 'nologin'])->name('login');
 
 Route::post('/follow/{id}', [FollowController::class, 'follow']);

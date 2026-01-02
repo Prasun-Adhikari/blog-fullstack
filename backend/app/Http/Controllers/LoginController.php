@@ -39,7 +39,45 @@ class LoginController extends Controller
                 'token_type' => 'Bearer',
             ]);
         }
-        response()->json(['message' => 'Unauthorized'], 401);
+        return response()->json(['message' => 'Unauthorized'], 401);
+    }
+
+    public function forgot_password(Request $request) 
+    {
+        $request->validate([
+            'email' => 'required|email',
+        ]);
+        $email = $request->email;
+        if (!User::where('email', $email)->first()) {
+            return response()->json(['message' => 'Email not found'], 422);
+        }
+        
+        $code = random_int(100000, 999999);
+        
+        session()->put('verify_email', $email);
+        session()->put('verify_code', $code);
+        \Log::info('Reset code is ' . $code);
+    }
+
+    public function reset_password(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email',
+            'code' => 'required|digits:6',
+            'password' => 'required|string|confirmed:confirmPassword',
+        ]);
+        $code = session()->get('verify_code');
+        $email = session()->get('verify_email');
+        if (!($email == $request->email && $code == $request->code)) {
+            return response()->json(['message' => 'Invalid code'], 422);
+        }
+        else {
+            $user = User::where('email', $email)->first();
+            $user->password = bcrypt($request->password);
+            $user->save();
+            $request->session()->forget(['verify_email', 'verify_code']);
+            return response()->json(['message' => 'Password reset successfully'], 201);
+        }
     }
 
     public function nologin()
