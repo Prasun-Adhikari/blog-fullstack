@@ -14,6 +14,8 @@ class BlogController extends Controller
         $this->middleware('auth:sanctum')->only(
             ['store', 'update', 'currentuserblog', 'destroy', 'followedblogs']
         );
+        $this->middleware('can:update,blog')->only('update');
+        $this->middleware('can:delete,blog')->only('destroy');
     }
     /**
      * Display a listing of the resource.
