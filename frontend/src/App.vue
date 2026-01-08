@@ -1,27 +1,15 @@
 <script setup>
 import { ref, watch, onMounted, computed } from 'vue';
-import { useRouter } from 'vue-router';
+import { useRoute } from 'vue-router';
 import { HomeIcon, PlusIcon, Bars3Icon, UserCircleIcon, BookmarkIcon, ArrowRightStartOnRectangleIcon } from '@heroicons/vue/24/outline'
 
 import api from './utils/axios';
 import { useAuthStore } from './stores/auth';
 
 const authStore = useAuthStore();
-const router = useRouter();
-const curPath = ref('/');
-
-const storedPath = localStorage.getItem('curPath')
-if (storedPath) {
-  curPath.value = storedPath
-  router.push(storedPath)
-}
+const route = useRoute();
 
 const sidebar = ref(false)
-
-watch(curPath, newPath => {
-  localStorage.setItem('curPath', newPath)
-})
-
 
 const links = computed(() =>
   !authStore.isAuthenticated
@@ -64,14 +52,14 @@ onMounted(
     <nav class="nav1 h-15 p-2">
       <div class="container mx-auto px-4 flex justify-between items-center">
         <div class="flex space-x-4">
-          <RouterLink to='/' class="nav-link" @click="curPath='/'">
+          <RouterLink to='/' class="nav-link">
             <img src="/logo.webp" alt="Logo" class="h-8 float-left mr-2">
             Blog Site
           </RouterLink>
         </div>
         <div class="flex items-center space-x-4">
           <RouterLink v-for="(displayName, link) in userLinks" 
-        :to=link :class="{'bg-gray-700': curPath==link}" @click="curPath=link"
+        :to=link :class="{'bg-gray-700': route.path==link}"
         class="nav-link" :title="displayName">
         <component v-if="displayName in icons" :is="icons[displayName]" class="h-6 mr-2"></component>
         <span v-else>{{displayName}}</span>
@@ -88,7 +76,7 @@ onMounted(
         <span v-if="sidebar">Collapse</span>
       </div>
       <RouterLink v-for="(displayName, link) in links" 
-        :to=link :class="{'bg-gray-700': curPath==link}" @click="curPath=link"
+        :to=link :class="{'bg-gray-700': route.path==link}"
         class="nav-link" :title="displayName">
         <component :is="icons[displayName]" class="h-6 float-left mr-2"></component>
         <span v-if="sidebar">{{displayName}}</span>
