@@ -21,7 +21,7 @@ const routes = [
   {'path': '/logout', component: Logout},
   {'path': '/user/:id', component: ViewUser},
   {'path': '/follows', component: Follows},
-  {'path': '/post', component: Post},
+  {'path': '/post/:id?', component: Post},
 ]
 
 const router = createRouter({

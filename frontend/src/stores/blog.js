@@ -15,6 +15,10 @@ export const useBlogStore = defineStore("blog", {
       const allposts = await api.get("api/blog");
       this.posts = allposts.data;
     },
+    async fetchOnePost(id) {
+      const post = await api.get(`api/blog/${id}`);
+      this.selectedPost = post.data;
+    },
     selectPost(id) {
       this.selectedPost = this.posts.filter((post) => post.id == id)[0];
     },

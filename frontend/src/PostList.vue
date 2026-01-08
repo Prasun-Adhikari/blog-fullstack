@@ -14,7 +14,7 @@ const router = useRouter()
       v-for="post in blogStore.posts"
       :key="post.id"
       class="p-4 border border-gray-500 rounded-lg hover:bg-gray-50 transition-colors"
-      @click="() => {blogStore.selectPost(post.id); router.push('/post')}"
+      @click="() => {router.push(`/post/${post.id}`)}"
     >
       <h2 class="text-xl font-semibold">{{ post.title }}</h2>
       <div class="flex items-center text-sm text-gray-500 mt-2">
